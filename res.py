@@ -13,7 +13,7 @@ def ab_dev():
             abdev=Gui()
             abdev.la(text='An app by Sujay HG')
 
-
+#function to calc Gpa
 def gpa_calc(data):
 	i=-1
 	j=-3
@@ -34,35 +34,35 @@ def final_res(ipusn):
             view.title('view results')
             fin=open('RES.txt')
 
-            usn_gpa={}
+            usn_gpa={}	#an dictionary with usn as key and gpa as items
             name_usn={}
-            gpa_usn={}
-            linesplit=[]
-            gpaacc=[]
-            usnacc=[]
-            usn_name={}
+            gpa_usn={}	#an dictionary with gpa as key and usn as items
+            linesplit=[]	#an empty list
+            gpaacc=[]		#a list to store all the gpas
+            usnacc=[]		#a list to store all the usn
+            usn_name={}		#a dictionary to map usn to names
             for line in fin:
-                        linesplit=line.split(' ')
-                        gpa=gpa_calc(linesplit)
-                        usn_gpa[linesplit[1]]=gpa
-                        usnacc.append(linesplit[1])
+                        linesplit=line.split(' ')	#reads the line and splits it into list of strings
+                        gpa=gpa_calc(linesplit)		#sends the whole list to the function
+                        usn_gpa[linesplit[1]]=gpa	#stores the gpa in a dictionary database
+                        usnacc.append(linesplit[1])	#stores the usn into a usn accumilator
                         dell=' '
-                        usn_name[linesplit[1]]=dell.join(linesplit[2:-18])
-                        if gpa in gpa_usn:
+                        usn_name[linesplit[1]]=dell.join(linesplit[2:-18])	#extracts the name from the line
+                        if gpa in gpa_usn:			#store all the usns with same GPAs under the GPA key
                                     gpa_usn[gpa].append(linesplit[1])
                         else:
                                     gpa_usn[gpa]=[linesplit[1]]
 
-                        if gpa not in gpaacc:
+                        if gpa not in gpaacc:		#store gpa into gpaacc if it is not in the list
                                     gpaacc.append(gpa)
 
-            gpaacc.sort(reverse=True)
+            gpaacc.sort(reverse=True)		#sort the gpa acc for finding the rank
 
             if ipusn not in usnacc:
                         view.la(text='Invalid USN\n Make sure you have entered the USN correctly')
 
-            gpa2=usn_gpa[ipusn]
-            for i in range(len(gpaacc)):
+            gpa2=usn_gpa[ipusn]		#get the gpa of the student whose usn is taken as input
+            for i in range(len(gpaacc)):	#find the rank
                            if gpaacc[i]==gpa2:
                                        rank=i+1
             view.row()
@@ -88,12 +88,12 @@ def final_res(ipusn):
 
 
 def res():
-            u=entry.get()
-            final_res(u.upper())
+            u=entry.get()		#get the entry from the txt field(input USN)
+            final_res(u.upper())	#pass the usn into the function
 
 
 
-win = Gui()
+win = Gui()	#initialise a win object
 win.title('GPA Analysis')
 win.row()
 logo1=PIL.open('logo.png')
@@ -109,7 +109,7 @@ win.endcol()
 win.col([0,3],pady=70,padx=50)
 win.la(text='Enter your USN')
 entry=win.en(text='1BM12EC129')
-win.bu(text='View result analysis', command=res)
+win.bu(text='View result analysis', command=res)	#function res is invoked when the bu is clicked
 win.endcol()
 win.row([0,4], padx=1)
 win.col()
